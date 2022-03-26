@@ -1,44 +1,22 @@
 'use strict';
 
-let lang = prompt(`'ru' 'en'`);
-// console.log('lang: ', lang);
-
-// let lang = 'en';
-let arrDateRu = ['понедельник', 'вторник', 'среда', 'четверг', 'пятница', 'суббота', 'воскресенье'];
-let arrDateEn = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
-
-if (lang === 'ru') {
-	arrDateRu.forEach(item => {
-		console.log('item: ', item);
-	});
-} else if (lang === 'en') {
-	arrDateEn.forEach(item => {
-		console.log('item: ', item);
-	});
-} else {
-	console.log('не правильно ввели язык');
-};
-
-switch (lang) {
-	case 'ru':
-	for (let i = 0; i < arrDateRu.length; i++) {
-		const item = arrDateRu[i];
-		console.log('item: ', item);
-	}
-		break;
-	case 'en':
-		for (let i = 0; i < arrDateEn.length; i++) {
-			const item = arrDateEn[i];
-			console.log('item: ', item);
+const nameFunc = function (string) {
+	console.log('string: ', string.length);
+	if (typeof (string) === 'string' && string !== undefined && string !== null && string !== '') {
+		if (string.length >= 30) {
+			let result = string.substring(0, 30 ) + '...';
+			console.log('result: ', result);
+			console.log('string.length больше 30');
+		} else {
+			console.log('string.length меньше 30');
 		}
-		break;
-	default:
-		console.log('не правильно ввели язык');
-		break;
+	} else {
+		console.log('передана не строка');
+	};
 };
 
-let namePerson = prompt('Ваше имя');
-// let namePerson = 'Максим';
+let string = '   1234567891123456789112345678911234567891123456789112345678911234567891       ';
+string = string.trim();
+// let string = prompt().trim();
 
-let pesponse = namePerson === 'Артем'  ? namePerson + ' директор' :  namePerson === 'Максим' ? namePerson + ' преподаватель' : namePerson + ' студент';
-console.log('pesponse: ', pesponse);
+nameFunc(string);
