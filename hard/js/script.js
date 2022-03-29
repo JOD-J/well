@@ -1,22 +1,26 @@
 'use strict';
 
-const nameFunc = function (string) {
-	console.log('string: ', string.length);
-	if (typeof (string) === 'string' && string !== undefined && string !== null && string !== '') {
-		if (string.length >= 30) {
-			let result = string.substring(0, 30 ) + '...';
-			console.log('result: ', result);
-			console.log('string.length больше 30');
-		} else {
-			console.log('string.length меньше 30');
-		}
-	} else {
-		console.log('передана не строка');
+let arr = [
+	'123',
+	'234',
+	'345',
+	'456',
+	'678',
+	'2564',
+	'789',
+	'46577',
+	'891',
+];
+console.log('arr: ', arr);
+
+arr.forEach(item => {
+	if (item.startsWith(2) || item.startsWith(4)) {
+		console.log('item: ', item);
 	};
+});
+nextPrime: for (let i = 2; i <= 99; i++) {
+	for (let j = 2; j < i; j++) {
+		if (i % j === 0) continue nextPrime;
+	};
+	console.log(i, `Делители этого числа: 1 и ${i}`);
 };
-
-let string = '   1234567891123456789112345678911234567891123456789112345678911234567891       ';
-string = string.trim();
-// let string = prompt().trim();
-
-nameFunc(string);
