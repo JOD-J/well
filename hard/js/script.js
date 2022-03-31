@@ -1,26 +1,44 @@
 'use strict';
 
-let arr = [
-	'123',
-	'234',
-	'345',
-	'456',
-	'678',
-	'2564',
-	'789',
-	'46577',
-	'891',
-];
-console.log('arr: ', arr);
 
-arr.forEach(item => {
-	if (item.startsWith(2) || item.startsWith(4)) {
-		console.log('item: ', item);
+
+const globalStart = function () {
+	const numberRandom = Math.floor(Math.random(1) * 100);
+	console.log('numberRandom: ', numberRandom);
+	let count = 3;
+	const startGame = function () {
+		let number = prompt('Угадай число от 1 до 100');
+		if (number !== null) {
+			number = number.trim();
+		};
+		if (count == 1) {
+			let res = confirm('Попытки закончились, хотите сыграть еще?');
+			if (res) {
+				globalStart();
+			} else {
+				alert('Игра окончена');
+			};
+		};
+		if (+number === numberRandom) {
+			let res = confirm(`Поздравляю, Вы угадали!!! загаданное число ${numberRandom}, Хотели бы сыграть еще?`);
+			if (res) {
+				globalStart();
+			};
+		} else if (+number > numberRandom && number !== null && number !== '' && count > 1) {
+			--count;
+			alert(`Загаданное число меньше, ваше число ${number}, осталось попыток ${count}`);
+			startGame();
+		} else if (+number < numberRandom && number !== null && number !== '' && count > 1) {
+			--count;
+			alert(`Загаданное число больше, ваше число ${number}, осталось попыток ${count}`);
+			startGame();
+		} else if (typeof (number) === 'string' && count > 1) {
+			alert('Введи число!');
+			startGame();
+		} else if (number === null && count > 1) {
+			alert('Игра окончена');
+		};
 	};
-});
-nextPrime: for (let i = 2; i <= 99; i++) {
-	for (let j = 2; j < i; j++) {
-		if (i % j === 0) continue nextPrime;
-	};
-	console.log(i, `Делители этого числа: 1 и ${i}`);
+	startGame();
 };
+globalStart();
