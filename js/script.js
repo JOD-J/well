@@ -1,4 +1,4 @@
-'use strict';
+// 'use strict';
 // ? ===================================================== isNumber ===========================================================
 let isNumber = function (n) {
 	return !isNaN(parseFloat(n)) && isFinite(n);
@@ -37,9 +37,15 @@ const appData = {
 		};
 		appData.deposit = confirm('Есть ли у вас депозит в банке?');
 		for (let i = 0; i < 2; i++) {
-			let response = prompt('Введите обязательную статью расходов?').toLowerCase().trim();
+			let response = prompt('Введите обязательную статью расходов?');
+			if (response !== null) {
+				response.trim();
+			};
 			while (response === null || response === '') {
-				response = prompt('Введите обязательную статью расходов?').toLowerCase().trim();
+				response = prompt('Введите обязательную статью расходов?');
+				if (response !== null) {
+					response.trim();
+				};
 			};
 			let sum = prompt('Во сколько это обойдется?');
 			while (!isNumber(sum)) {
