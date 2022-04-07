@@ -214,38 +214,38 @@ const appData = {
 	// ? ===================================================== getTargetMonth ===========================================================
 
 
-	// ? ===================================================== getStatusIncome ===========================================================
-	getStatusIncome: function () {
-		if (appData.budgetDay >= 1200) {
-			console.log('У вас высокий уровень дохода');
-		} else if (appData.budgetDay >= 600 && appData.budgetDay < 1200) {
-			console.log('У вас средний уровень дохода');
-		} else if (appData.budgetDay < 600 && appData.budgetDay >= 0) {
-			console.log('К сожалению у вас уровень дохода ниже среднего');
-		} else if (appData.budgetDay < 0) {
-			console.log('Что то пошло не так');
-		};
-	},
-	// ? ===================================================== getStatusIncome ===========================================================
+	// // ? ===================================================== getStatusIncome ===========================================================
+	// getStatusIncome: function () {
+	// 	if (appData.budgetDay >= 1200) {
+	// 		console.log('У вас высокий уровень дохода');
+	// 	} else if (appData.budgetDay >= 600 && appData.budgetDay < 1200) {
+	// 		console.log('У вас средний уровень дохода');
+	// 	} else if (appData.budgetDay < 600 && appData.budgetDay >= 0) {
+	// 		console.log('К сожалению у вас уровень дохода ниже среднего');
+	// 	} else if (appData.budgetDay < 0) {
+	// 		console.log('Что то пошло не так');
+	// 	};
+	// },
+	// // ? ===================================================== getStatusIncome ===========================================================
 
 
-	// ? ===================================================== getInfoDeposit ===========================================================
-	getInfoDeposit: function () {
-		if (appData.deposit) {
-			let percentDeposit = prompt('Какой годовой процент?', '10')
-			while (!isNumber(percentDeposit)) {
-				percentDeposit = prompt('Какой годовой процент?', '10');
-			};
-			appData.percentDeposit = +percentDeposit;
+	// // ? ===================================================== getInfoDeposit ===========================================================
+	// getInfoDeposit: function () {
+	// 	if (appData.deposit) {
+	// 		let percentDeposit = prompt('Какой годовой процент?', '10')
+	// 		while (!isNumber(percentDeposit)) {
+	// 			percentDeposit = prompt('Какой годовой процент?', '10');
+	// 		};
+	// 		appData.percentDeposit = +percentDeposit;
 
-			let moneyDeposit = prompt('Какая сумма заложенна', '10000');
-			while (!isNumber(moneyDeposit)) {
-				moneyDeposit = prompt('Какая сумма заложенна', '10000');
-			};
-			appData.moneyDeposit = +moneyDeposit;
-		};
-	},
-	// ? ===================================================== getInfoDeposit ===========================================================
+	// 		let moneyDeposit = prompt('Какая сумма заложенна', '10000');
+	// 		while (!isNumber(moneyDeposit)) {
+	// 			moneyDeposit = prompt('Какая сумма заложенна', '10000');
+	// 		};
+	// 		appData.moneyDeposit = +moneyDeposit;
+	// 	};
+	// },
+	// // ? ===================================================== getInfoDeposit ===========================================================
 
 
 	// ? ===================================================== calcSavedMoney ===========================================================
@@ -290,7 +290,9 @@ input.forEach(item => {
 	let placeholderName = item.getAttribute('placeholder');
 	item.addEventListener('input', () => {
 		if (placeholderName === 'Наименование') {
-			item.value = item.value.replace(/[^а-я ^A-Я,]/g, '')
+			item.value = item.value.replace(/[^А-Я ,]/i, '')
+		} else if (placeholderName === 'название') {
+			item.value = item.value.replace(/[^А-Я ,]/i, '')
 		} else if (placeholderName === 'Сумма') {
 			item.value = item.value.replace(/\D/, '')
 		};
