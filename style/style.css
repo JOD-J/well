@@ -1,0 +1,63 @@
+/* .header {}
+
+.header__title {}
+
+.header__buttons {
+	margin-bottom: 10px;
+}
+
+.header__button-registor {}
+
+.header__button-login {}
+
+.header__inputs {
+	display: none;
+	flex-direction: column;
+	width: 500px;
+}
+
+.header__inputs-isopen {
+	display: flex;
+
+}
+
+.header__input-name {
+	margin-bottom: 10px;
+	display: block;
+}
+
+.header__input-login {
+	display: block;
+	margin-bottom: 10px;
+}
+
+.header__input-password {
+	margin-bottom: 10px;
+}
+
+.header__input-name-isopen {
+	display: none;
+}
+
+.header__send {
+	margin-bottom: 10px;
+}
+
+.header__items {}
+
+.header__item {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 10px;
+}
+
+.header__text {
+	margin-right: 10px;
+}
+
+.items__remove {}
+
+.button__reset-password {
+	margin-bottom: 10px;
+} */
