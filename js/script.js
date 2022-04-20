@@ -129,6 +129,15 @@ class AppData {
 		depositAmountElem.value = '';
 		depositPercentElem.value = '';
 
+		localStorage.removeItem('isLoad');
+		localStorage.removeItem('budgetMonthValueElem');
+		localStorage.removeItem('budgetDayValueElem');
+		localStorage.removeItem('expensesMonthValueElem');
+		localStorage.removeItem('additionalExpensesValueElem');
+		localStorage.removeItem('additionalIncomeValueElem');
+		localStorage.removeItem('targetMonthValueElem');
+		localStorage.removeItem('incomePeriodValueElem');
+
 	};
 	// ? ===================================================== reset ===========================================================
 
@@ -163,6 +172,7 @@ class AppData {
 
 		this.showResult();
 		this.blockingInput();
+		this.sendlocalStorage();
 	};
 	// ? ===================================================== start ===========================================================
 
@@ -344,8 +354,56 @@ class AppData {
 	// ? ===================================================== depositHandler ===========================================================
 
 
+	// ? ===================================================== getlocalStorage ===========================================================
+	getlocalStorage() {
+
+	};
+	// ? ===================================================== getlocalStorage ===========================================================
+
+
+	// ? ===================================================== setlocalStorage ===========================================================
+	checklocalStorage() {
+		const isLoad = localStorage.getItem('isLoad');
+		if (isLoad === 'true') {
+			budgetMonthValueElem.value = localStorage.getItem('budgetMonthValueElem');
+			budgetDayValueElem.value = localStorage.getItem('budgetDayValueElem');
+			expensesMonthValueElem.value = localStorage.getItem('expensesMonthValueElem');
+			additionalExpensesValueElem.value = localStorage.getItem('additionalExpensesValueElem');
+			additionalIncomeValueElem.value = localStorage.getItem('additionalIncomeValueElem');
+			targetMonthValueElem.value = localStorage.getItem('targetMonthValueElem');
+			incomePeriodValueElem.value = localStorage.getItem('incomePeriodValueElem');
+			this.blockingInput();
+		} else {
+			budgetMonthValueElem.value = '';
+			budgetDayValueElem.value = '';
+			expensesMonthValueElem.value = '';
+			additionalExpensesValueElem.value = '';
+			additionalIncomeValueElem.value = '';
+			targetMonthValueElem.value = '';
+			incomePeriodValueElem.value = '';
+		};
+	};
+	// ? ===================================================== setlocalStorage ===========================================================
+
+
+	// ? ===================================================== setlocalStorage ===========================================================
+	sendlocalStorage() {
+		localStorage.setItem('isLoad', true);
+		localStorage.setItem('budgetMonthValueElem', budgetMonthValueElem.value);
+		localStorage.setItem('budgetDayValueElem', budgetDayValueElem.value);
+		localStorage.setItem('expensesMonthValueElem', expensesMonthValueElem.value);
+		localStorage.setItem('additionalExpensesValueElem', additionalExpensesValueElem.value);
+		localStorage.setItem('additionalIncomeValueElem', additionalIncomeValueElem.value);
+		localStorage.setItem('targetMonthValueElem', targetMonthValueElem.value);
+		localStorage.setItem('incomePeriodValueElem', incomePeriodValueElem.value);
+	};
+	// ? ===================================================== setlocalStorage ===========================================================
+
+
 	// ? ===================================================== eventsListeners ===========================================================
 	eventsListeners() {
+		this.checklocalStorage();
+
 		this.startDisabled();
 
 		startElem.addEventListener('click', this.start.bind(this));
