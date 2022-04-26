@@ -57,17 +57,12 @@ countTimer('30 April 2022');
 // ! менюшка
 // ? =============================================== toggleMenu ===============================================
 const toggleMenu = () => {
-	const btnMenuElem = document.querySelector('.menu');
 	const menuElem = document.querySelector('menu');
-	const closeBtnElem = document.querySelector('.close-btn');
-	const menuItemsElems = menuElem.querySelectorAll('ul>li>a');
-	const mainAElem = document.querySelector('main>a');
 	let isOpen = true;
 	let countInterval = 0;
 	// * =============================================== handlerMenu ===============================================
-	const handlerMenu = () => {
+	const handlerMenu = (isOpen) => {
 		if (isOpen) {
-			isOpen = false;
 			if (window.innerWidth > 768) {
 				const startSetInterval = setInterval(() => {
 					countInterval++;
@@ -81,14 +76,13 @@ const toggleMenu = () => {
 				menuElem.style.transform = `translateX(100%)`;
 			}
 		} else {
-			isOpen = true;
 			countInterval = 0;
 			menuElem.style.transform = `translateX(-100%)`;
 		};
 	};
 	// * =============================================== handlerMenu ===============================================
-	
-	
+
+
 	// ! плавный скрол меню и блока под майном
 	// * =============================================== scroll ===============================================
 	const scroll = (item) => {
@@ -99,21 +93,29 @@ const toggleMenu = () => {
 		});
 	};
 	// * =============================================== scroll ===============================================
-	
-	
+
+
 	// * =============================================== обработчики ===============================================
-	btnMenuElem.addEventListener('click', handlerMenu);
-	closeBtnElem.addEventListener('click', handlerMenu);
-	menuItemsElems.forEach(item => {
-		item.addEventListener('click', handlerMenu);
-		item.addEventListener('click', event => {
+	document.addEventListener('click', event => {
+		let target = event.target;
+		if (target.closest('.menu')) {
+			isOpen = true;
+			handlerMenu(isOpen);
+		} else if (target.closest('.close-btn')) {
+			isOpen = false;
+			handlerMenu(isOpen);
+		} else if (target.closest('menu>ul>li>a')) {
+			isOpen = false;
+			handlerMenu(isOpen);
 			event.preventDefault();
-			scroll(item);
-		});
-	});
-	mainAElem.addEventListener('click', event => {
-		event.preventDefault();
-		scroll(mainAElem);
+			scroll(target);
+		} else if (target.closest('main>a')) {
+			event.preventDefault();
+			scroll(target.parentElement);
+		} else if (!target.closest('menu')) {
+			isOpen = false;
+			handlerMenu(isOpen);
+		};
 	});
 	// * =============================================== обработчики ===============================================
 };
@@ -126,16 +128,64 @@ toggleMenu();
 const togglePopUp = () => {
 	const popupElem = document.querySelector('.popup');
 	const popupBtnElem = document.querySelectorAll('.popup-btn');
-	const popupCloseElem = document.querySelector('.popup-close');
 	popupBtnElem.forEach(item => {
 		item.addEventListener('click', () => {
 			popupElem.style.display = 'block';
 		});
 	});
-	popupCloseElem.addEventListener('click', () => {
-		popupElem.style.display = 'none';
+	popupElem.addEventListener('click', event => {
+		let target = event.target;
+		if (target.classList.contains('popup-close')) {
+			popupElem.style.display = 'none';
+		} else {
+			target = target.closest('.popup-content');
+			if (!target) {
+				popupElem.style.display = 'none';
+			};
+		};
 	});
 };
 togglePopUp();
 // ? =============================================== togglePopUp ===============================================
 
+
+// ! табы 
+// ? =============================================== tabs ===============================================
+const tabs = () => {
+	const tabHeaderElem = document.querySelector('.service-header');
+	const tabElem = document.querySelectorAll('.service-header-tab');
+	const tabContenetElem = document.querySelectorAll('.service-tab');
+
+
+	// * =============================================== toggleTabContent ===============================================
+	const toggleTabContent = (index) => {
+		tabContenetElem.forEach((item, inde) => {
+			if (index === inde) {
+				tabElem[inde].classList.add('active');
+				tabContenetElem[inde].classList.remove('d-none');
+			} else {
+				tabElem[inde].classList.remove('active');
+				tabContenetElem[inde].classList.add('d-none');
+			};
+		})
+	};
+	// * =============================================== toggleTabContent ===============================================
+
+
+	// * =============================================== обработчик ===============================================
+	tabHeaderElem.addEventListener('click', (event) => {
+		let target = event.target;
+		target = target.closest('.service-header-tab');
+		if (target) {
+			tabElem.forEach((item, index) => {
+				if (item === target) {
+					toggleTabContent(index);
+				};
+			});
+		};
+	});
+	// * =============================================== обработчик ===============================================
+
+};
+tabs();
+// ? =============================================== tabs ===============================================
