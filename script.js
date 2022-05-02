@@ -189,3 +189,123 @@ const tabs = () => {
 };
 tabs();
 // ? =============================================== tabs ===============================================
+
+// ! слайдер 
+// ? =============================================== tabs ===============================================
+const slider = () => {
+	const slideElem = document.querySelectorAll('.portfolio-item');
+	const portfolioDotsElem = document.querySelector('.portfolio-dots');
+	const sliderElem = document.querySelector('.portfolio-content');
+
+	let currentSlide = 0;
+	let interval;
+
+	// * =============================================== addDot ===============================================
+	const addDot = () => {
+		slideElem.forEach((item, index) => {
+			let li = document.createElement('li');
+			li.classList.add('dot');
+			if (index === 0) {
+				li.classList.add('dot-active');
+			}
+			portfolioDotsElem.append(li);
+		});
+	};
+	addDot();
+	// * =============================================== addDot ===============================================
+
+
+	// * =============================================== prevSlide ===============================================
+	const prevSlide = (item, index, strClass) => {
+		item[index].classList.remove(strClass);
+	};
+	// * =============================================== prevSlide ===============================================
+
+
+	// * =============================================== nextSlide ===============================================
+	const nextSlide = (item, index, strClass) => {
+		item[index].classList.add(strClass);
+	};
+	// * =============================================== nextSlide ===============================================
+
+
+	// * =============================================== autoPlaySlide ===============================================
+	const autoPlaySlide = () => {
+		const dotElem = document.querySelectorAll('.dot');
+		prevSlide(slideElem, currentSlide, 'portfolio-item-active');
+		prevSlide(dotElem, currentSlide, 'dot-active');
+		currentSlide++;
+		if (currentSlide >= slideElem.length) {
+			currentSlide = 0;
+		};
+		nextSlide(slideElem, currentSlide, 'portfolio-item-active');
+		nextSlide(dotElem, currentSlide, 'dot-active');
+	};
+	// * =============================================== autoPlaySlide ===============================================
+
+
+	// * =============================================== startSlide ===============================================
+	const startSlide = (time) => {
+		interval = setInterval(autoPlaySlide, time);
+	};
+	// * =============================================== startSlide ===============================================
+
+
+	// * =============================================== stopSlide ===============================================
+	const stopSlide = () => {
+		clearInterval(interval);
+	};
+	// * =============================================== stopSlide ===============================================
+
+
+	// * =============================================== события ===============================================
+	sliderElem.addEventListener('click', event => {
+		event.preventDefault();
+		let target = event.target;
+		if (target.matches('.portfolio-btn, .dot')) {
+			const dotElem = document.querySelectorAll('.dot');
+			prevSlide(slideElem, currentSlide, 'portfolio-item-active');
+			prevSlide(dotElem, currentSlide, 'dot-active');
+			if (target.matches('#arrow-right')) {
+				currentSlide++;
+			} else if (target.matches('#arrow-left')) {
+				currentSlide--;
+			} else if (target.matches('.dot')) {
+				dotElem.forEach((item, index) => {
+					if (item === target) {
+						currentSlide = index;
+					}
+				});
+			};
+			if (currentSlide >= slideElem.length) {
+				currentSlide = 0;
+			};
+			if (currentSlide < 0) {
+				currentSlide = slideElem.length - 1;
+			};
+			nextSlide(slideElem, currentSlide, 'portfolio-item-active');
+			nextSlide(dotElem, currentSlide, 'dot-active');
+		};
+	});
+
+
+	sliderElem.addEventListener('mouseover', (event) => {
+		let target = event.target;
+		if (target.matches('.portfolio-btn') || target.matches('.dot')) {
+			stopSlide();
+		};
+	});
+
+	sliderElem.addEventListener('mouseout', (event) => {
+		let target = event.target;
+		if (target.matches('.portfolio-btn') || target.matches('.dot')) {
+			startSlide(1500);
+		};
+	});
+	// * =============================================== события ===============================================
+
+	startSlide(1500);
+
+};
+slider();
+// ? =============================================== tabs ===============================================
