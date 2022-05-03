@@ -336,15 +336,66 @@ ourTeam();
 
 
 // ? =============================================== calculator ===============================================
-const calculator = () => {
+const calculator = (prise = 100) => {
 	const calcElem = document.querySelector('.calc');
+	const calcBlock = document.querySelector('.calc-block');
+	const calcType = document.querySelector('.calc-type');
+	const calcSquare = document.querySelector('.calc-square');
+	const calcDay = document.querySelector('.calc-day');
+	const calcCount = document.querySelector('.calc-count');
+	const calcValue = document.querySelector('#total');
+	let StartSetInterval;
+
+	
+	// * =============================================== countSum ===============================================
+	const countSum = () => {
+		let total = 0;
+		let countValue = 1;
+		let dayValue = 1;
+		const typeValue = calcType.options[calcType.selectedIndex].value;
+		const squareValue = +calcSquare.value;
+		if (calcCount.value > 1) {
+			countValue += (calcCount.value - 1) / 10;
+		};
+		if (calcDay.value && calcDay.value < 5) {
+			dayValue *= 2;
+		} else if (calcDay.value && calcDay.value < 10) {
+			dayValue *= 1.5;
+		};
+		if (typeValue && squareValue) {
+			total = prise * typeValue * squareValue * countValue * dayValue;
+		};
+		let countInterval = 0.5;
+		if (total !== 0) {
+			StartSetInterval = setInterval(() => {
+				countInterval += countInterval;
+				calcValue.textContent = countInterval;
+				if (countInterval > total) {
+					calcValue.textContent = total;
+					clearInterval(StartSetInterval);
+				}
+			}, 75);
+		};
+	};
+	// * =============================================== countSum ===============================================
+
+
+	// * =============================================== события ===============================================
+	calcBlock.addEventListener('change', event => {
+		const target = event.target;
+		if (target.matches('input') || target.matches('select')) {
+			clearInterval(StartSetInterval);
+			countSum();
+		};
+	});
 	calcElem.addEventListener('input', (event) => {
 		const target = event.target;
 		if (target.matches('input')) {
 			target.value = target.value.replace(/\D/, '');
 		};
 	});
+	// * =============================================== события ===============================================
 
 };
-calculator();
+calculator(100);
 // ? =============================================== calculator ===============================================
