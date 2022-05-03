@@ -309,3 +309,42 @@ const slider = () => {
 };
 slider();
 // ? =============================================== tabs ===============================================
+
+
+// ? =============================================== ourTeam ===============================================
+const ourTeam = () => {
+	const commandElem = document.querySelector('.command');
+	let newSrc;
+	// * =============================================== события ===============================================
+	commandElem.addEventListener('mouseover', event => {
+		const target = event.target;
+		if (target.matches('.command__photo')) {
+			newSrc = target.src;
+			target.src = target.dataset.img;
+		};
+	});
+	commandElem.addEventListener('mouseout', event => {
+		const target = event.target;
+		if (target.matches('.command__photo')) {
+			target.src = newSrc;
+		};
+	});
+	// * =============================================== события ===============================================
+};
+ourTeam();
+// ? =============================================== ourTeam ===============================================
+
+
+// ? =============================================== calculator ===============================================
+const calculator = () => {
+	const calcElem = document.querySelector('.calc');
+	calcElem.addEventListener('input', (event) => {
+		const target = event.target;
+		if (target.matches('input')) {
+			target.value = target.value.replace(/\D/, '');
+		};
+	});
+
+};
+calculator();
+// ? =============================================== calculator ===============================================
