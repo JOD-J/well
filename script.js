@@ -50,7 +50,7 @@ function countTimer(deadLine) {
 	updateClock();
 	// * =============================================== updateClock ===============================================
 };
-countTimer('30 April 2022');
+countTimer('30 April 2023');
 // ? =============================================== countTimer ===============================================
 
 
@@ -311,6 +311,7 @@ slider();
 // ? =============================================== tabs ===============================================
 
 
+// ! показывание других картинок 
 // ? =============================================== ourTeam ===============================================
 const ourTeam = () => {
 	const commandElem = document.querySelector('.command');
@@ -335,6 +336,7 @@ ourTeam();
 // ? =============================================== ourTeam ===============================================
 
 
+// ! калькулятор расчета
 // ? =============================================== calculator ===============================================
 const calculator = (prise = 100) => {
 	const calcElem = document.querySelector('.calc');
@@ -346,7 +348,7 @@ const calculator = (prise = 100) => {
 	const calcValue = document.querySelector('#total');
 	let StartSetInterval;
 
-	
+
 	// * =============================================== countSum ===============================================
 	const countSum = () => {
 		let total = 0;
@@ -399,3 +401,189 @@ const calculator = (prise = 100) => {
 };
 calculator(100);
 // ? =============================================== calculator ===============================================
+
+
+// ! send-ajax-form
+// ? =============================================== sendForm ===============================================
+const sendForm = () => {
+	const errorMessage = 'Что то пошло не так...';
+	const loadMessage = 'Загрузка...';
+	const successMessage = 'Спасибо! Мы скоро с вами свяжемся!';
+
+	const formOneNameElem = document.querySelector('#form1-name');
+	const formTwoNameElem = document.querySelector('#form2-name');
+	const formThreeNameElem = document.querySelector('#form3-name');
+
+	const formOnePhoneElem = document.querySelector('#form1-phone');
+	const formTwoPhoneElem = document.querySelector('#form2-phone');
+	const formThreePhoneElem = document.querySelector('#form3-phone');
+
+	const formTwoMessageElem = document.querySelector('#form2-message');
+
+	const formOneElem = document.querySelector('#form1');
+	const formTwoElem = document.querySelector('#form2');
+	const formThreeElem = document.querySelector('#form3');
+
+
+	const statusMessage = document.createElement('div');
+	const skWaveElem = document.querySelector('.sk-wave');
+	statusMessage.style.cssText = 'font-size: 2rm';
+
+
+	// * =============================================== события ===============================================
+
+	formOnePhoneElem.addEventListener('input', () => {
+		validPhone(formOnePhoneElem);
+	});
+	formTwoPhoneElem.addEventListener('input', () => {
+		validPhone(formTwoPhoneElem);
+	});
+	formThreePhoneElem.addEventListener('input', () => {
+		validPhone(formThreePhoneElem);
+	});
+
+	formOneNameElem.addEventListener('input', () => {
+		validName(formOneNameElem);
+	});
+	formTwoNameElem.addEventListener('input', () => {
+		validName(formTwoNameElem);
+	});
+	formThreeNameElem.addEventListener('input', () => {
+		validName(formThreeNameElem);
+	});
+
+	formTwoMessageElem.addEventListener('input', () => {
+		validMessage(formTwoMessageElem);
+	});
+
+	formOneElem.addEventListener('submit', (event) => {
+		event.preventDefault();
+
+		skWaveElem.style.display = 'block';
+		formOneElem.append(skWaveElem);
+
+
+		const formData = new FormData(formOneElem);
+		let body = {};
+		formData.forEach((val, key) => {
+			body[key] = val;
+		});
+		postData(body, () => {
+			statusMessage.textContent = successMessage;
+			skWaveElem.style.display = 'none';
+			formOneElem.append(statusMessage);
+		}, (error) => {
+			statusMessage.textContent = errorMessage;
+			skWaveElem.style.display = 'none';
+			formOneElem.append(statusMessage);
+			console.error(error);
+		});
+
+		for (const item of formOneElem.elements) {
+			if (item.tagName.toLowerCase() !== 'button') {
+				item.value = '';
+			};
+		};
+	});
+
+
+	formTwoElem.addEventListener('submit', (event) => {
+		event.preventDefault();
+		skWaveElem.style.display = 'block';
+		formTwoElem.prepend(skWaveElem);
+
+		const formData = new FormData(formTwoElem);
+		let body = {};
+		formData.forEach((val, key) => {
+			body[key] = val;
+		});
+		postData(body, () => {
+			statusMessage.textContent = successMessage;
+			skWaveElem.style.display = 'none';
+			formTwoElem.prepend(statusMessage);
+		}, (error) => {
+			statusMessage.textContent = errorMessage;
+			skWaveElem.style.display = 'none';
+			formTwoElem.prepend(statusMessage);
+			console.error(error);
+		});
+
+		for (const item of formTwoElem.elements) {
+			if (item.tagName.toLowerCase() !== 'button') {
+				item.value = '';
+			};
+		};
+
+	});
+
+	formThreeElem.addEventListener('submit', (event) => {
+		event.preventDefault();
+		statusMessage.style.color = 'white';
+		skWaveElem.style.display = 'block';
+		formThreeElem.append(skWaveElem);
+
+		const formData = new FormData(formThreeElem);
+		let body = {};
+		formData.forEach((val, key) => {
+			body[key] = val;
+		});
+		postData(body, () => {
+			statusMessage.textContent = successMessage;
+			skWaveElem.style.display = 'none';
+			formThreeElem.append(statusMessage);
+
+		}, (error) => {
+			statusMessage.textContent = errorMessage;
+			skWaveElem.style.display = 'none';
+			formThreeElem.append(statusMessage);
+
+			console.error(error);
+		});
+
+		for (const item of formThreeElem.elements) {
+			if (item.tagName.toLowerCase() !== 'button') {
+				item.value = '';
+			};
+		};
+
+	});
+	// * =============================================== события ===============================================
+
+
+	// * =============================================== postData ===============================================
+	const postData = (body, outputData, erorrData) => {
+		const request = new XMLHttpRequest();
+		request.addEventListener('readystatechange', () => {
+			if (request.readyState !== 4) {
+				return;
+			};
+			if (request.status === 200) {
+				outputData();
+			} else {
+				erorrData(request.status);
+			};
+		});
+		request.open('POST', 'server.php');
+		request.setRequestHeader('Content-Type', 'application/json');
+		request.send(JSON.stringify(body));
+	};
+	// * =============================================== postData ===============================================
+
+
+	// * =============================================== валидация ===============================================
+	const validPhone = (input) => {
+		input.value = input.value.replace(/[^+0-9]/ig, '');
+	};
+	const validName = (input) => {
+		input.value = input.value.replace(/[^а-я ]/ig, '');
+	};
+	const validMessage = (input) => {
+		input.value = input.value.replace(/[^0-9а-я\.\,\!\? ]/ig, '');
+	};
+	// * =============================================== валидация ===============================================
+
+
+};
+sendForm();
+// ? =============================================== sendForm ===============================================
+
